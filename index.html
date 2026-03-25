@@ -238,7 +238,7 @@
 
             btnBuyBoost.addEventListener("click", () => {
                 cena = 25 * klikniecia;
-                if (wartosc > cena) {
+                if (wartosc >= cena) {
                     wartosc -= cena;
                     klikniecia += 1;
                     console.log(cena);
