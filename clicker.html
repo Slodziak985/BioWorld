@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Clicker</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                background-color: #1e1e1e;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 0;
+                padding: 20px;
+            }
+            .menu {
+                display: flex;
+                justify-content: center;
+                justify-self: center;
+                align-items: center;
+                background-color: darkgray;
+                border: none;
+                border-radius: 15px;
+                width: 50%;
+                height: 85px;
+                box-shadow: 0px 15px 30px 0px;
+                margin-top: 150px;
+            }
+            h1 {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 10;
+            }
+            .buttonbox {
+                background-color: #5d5d5d;
+                width: 300px;
+                display: flex;
+                gap: 20px;
+                padding: 10px;
+                justify-content: center;
+                justify-self: center;
+                align-items: center;
+                margin-top: 30px;
+                border: none;
+                border-radius: 15px;
+                height: 55px;
+            }
+            .shopmenu {
+                position: fixed;
+                justify-content: center;
+                top: 75%;
+                transform: translateY(-50%);
+                background-color: #333;
+                border: 2px solid #555;
+                justify-items: center;
+                border-radius: 15px;
+                width: 250px;
+                box-shadow: 5px 0px 15px rgba(0,0,0,0.5);
+                z-index: 100;
+            }
+            .pasek {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100px;
+                border-bottom: solid rgb(130, 204, 32);
+                background-color: gray;
+                z-index: 5;
+            }
+            .shoptitle {
+                background-color: rgb(53, 50, 50);
+                padding: 15px;
+                font-family: Georgia, serif;
+                text-align: center;
+                color: orange;
+                font-weight: bold;
+                border-bottom: 1px solid #555;
+            }
+            .shop-item { padding: 10px; text-align: center; }
+            #items {
+                padding: 15px;
+                border-bottom: 1px solid #444;
+                font-family: sans-serif;
+                color: white;
+                font-size: 14px;
+                transition: background 0.3s;
+            }
+            #number {
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                font-size: 85px;
+            }
+            #Tytul {
+                background-color: wheat;
+                width: 110px;
+                border: none;
+                display: flex;
+                z-index: 2;
+                align-items: center;
+                border-radius: 15px;
+                font-family: sans-serif;
+                justify-self: center;
+                height: 40px;
+            }
+            #buttonclick {
+                display: flex;
+                background-color: orange;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 6px;
+                font-family: sans-serif;
+                font-size: large;
+                justify-content: center;
+                justify-self: center;
+                align-items: center;
+            }
+            #buttonsell {
+                display: flex;
+                background-color: orange;
+                border: none;
+                padding: 5px 15px;
+                border-radius: 6px;
+                font-family: sans-serif;
+                font-size: large;
+                justify-content: center;
+                justify-self: center;
+                align-items: center;
+            }
+            #buttonreset {
+                display: flex;
+                background-color: orange;
+                border: none;
+                padding: 5px 15px;
+                border-radius: 6px;
+                font-family: sans-serif;
+                font-size: large;
+                justify-content: center;
+                justify-self: center;
+                align-items: center;
+            }
+            .shopbutton {
+                background-color: lightgreen;
+                border: none;
+                padding: 2px;
+                border-radius: 10px;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serifs;
+                font-weight: 900;
+            }
+            #shopbutton:hover {
+                background-color: greenyellow;
+                transform: scale(0.8);
+            }
+            #shopbutton:active {
+                transform: scale(1.3);
+            }
+            button:hover {
+                transform: scale(1.2);
+
+            }
+            button:active {
+                transform: scale(0.7);
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="background: wheat; color: black; padding: 10px; border-radius: 10px;">Clicker</h1>
+
+        <div class="pasek"></div>
+        
+        <div class="menu">
+            <div id="number">0</div> 
+        </div>
+
+        <div class="shopmenu">
+            <div class="shoptitle">SKLEP</div>
+            <div class="shop-item">
+                <button id="buyBoost" class="shopbutton">Dodatkowe kliknięcie: N/A</button>
+            </div>
+            <div class="shop-item">
+                <button id="resetBoost" class="shopbutton" style="background: #ff4444">Reset Dodatków</button>
+            </div>
+        </div>
+
+        <div class="buttonbox">
+            <button id="buttonclick">Click</button>
+            <button id="buttonreset">Reset</button>
+            <button id="buttonsell">Sell</button>
+        </div>
+        <script>
+            let wartosc = 0;
+            let klikniecia = 1;
+            let cena;
+            const liczba = document.getElementById("number");
+            const btnClick = document.getElementById("buttonclick");
+            const btnSell = document.getElementById("buttonsell");
+            const btnReset = document.getElementById("buttonreset");
+            const btnBuyBoost = document.getElementById("buyBoost");
+            const btnResetBoost = document.getElementById("resetBoost");
+            const pricelabel = document.getElementById("buyBoost");
+
+            function calculatePrice() {
+                cena = 25 * klikniecia;
+            }
+
+            function updateprice() {
+                pricelabel.textContent = "Dodatkowe kliknięcie: " + cena;
+            }
+
+            function updateDisplay() {
+                liczba.textContent = wartosc;
+                if (wartosc > 0) liczba.style.color = "white";
+                else if (wartosc < 0) liczba.style.color = "red";
+                else liczba.style.color = "green";
+            }
+
+            btnClick.addEventListener("click", () => {
+                wartosc += klikniecia;
+                calculatePrice();
+                updateprice();
+                updateDisplay();
+            });
+
+            btnSell.addEventListener("click", () => {
+                if (wartosc > 0) {
+                    wartosc -= 1;
+                    updateDisplay();
+                } else {
+                    alert("Nie masz monet!");
+                }
+            });
+
+            btnReset.addEventListener("click", () => {
+                wartosc = 0;
+                updateDisplay();
+            });
+
+            btnBuyBoost.addEventListener("click", () => {
+                cena = 25 * klikniecia;
+                if (wartosc > cena) {
+                    wartosc -= cena;
+                    klikniecia += 1;
+                    console.log(cena);
+                    updateDisplay();
+                    alert("Kupiono! Teraz klikasz za: " + klikniecia);
+                } else {
+                    alert("Za mało kasy!.");
+                }
+            });
+
+            btnResetBoost.addEventListener("click", () => {
+                if (klikniecia > 1) {
+                    klikniecia = 1;
+                    alert("Zresetowano ulepszenia.");
+                } else {
+                    alert("Nie masz żadnych ulepszeń.");
+                }
+            });
+    </script>
+    </body>
+</html>
